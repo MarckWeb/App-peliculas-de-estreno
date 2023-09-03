@@ -1,12 +1,12 @@
 //evento del menu desplaze
 eventMenuButton()
-function eventMenuButton(){
+function eventMenuButton() {
     let boton = document.getElementById("btn-menu")
-let menu = document.getElementById("menu-nav")
+    let menu = document.getElementById("menu-nav")
 
-boton.addEventListener("click", function(){
-    menu.classList.toggle("open")
-})
+    boton.addEventListener("click", function () {
+        menu.classList.toggle("open")
+    })
 }
 
 
@@ -15,7 +15,7 @@ let page = 1;
 
 //sector eventos botones siguiente anterior
 sectionButtonsNextAndBefore()
-function sectionButtonsNextAndBefore(){
+function sectionButtonsNextAndBefore() {
     let next = document.getElementById("btn-siguiente");
     let anterior = document.getElementById("btn-anterior");
     next.addEventListener("click", () => {
@@ -35,7 +35,7 @@ function sectionButtonsNextAndBefore(){
             botones.innerHTML = `<span>${page}<span>`
         }
     })
-} 
+}
 
 //llamada a la api principal
 callApiFilm()
@@ -64,22 +64,22 @@ function printEtiquetsHtml(data) {
 
     //para hacer la funcion de titulos
     let itemsLi = document.querySelectorAll(".items")
-    
+
     itemsLi.forEach(item => {
         item.addEventListener("click", () => {
             let image = item.querySelector('.items img').src
             let title = item.querySelector('.title').innerHTML
             let description = item.querySelector(".description").innerHTML
             let date = item.querySelector(".items p").innerHTML
-            
+
             const moviesObjet = {
                 image,
                 title,
                 description,
-                date   
+                date
             }
             arrayOfObjets(moviesObjet)
-            
+
         })
     })
 }
@@ -87,32 +87,34 @@ function printEtiquetsHtml(data) {
 // guardar datos a localStorage
 function arrayOfObjets(moviesObjet) {
     let exist = false
-    let arrayMoviesAll =[];
-    if(localStorage.getItem("results")){
+    let arrayMoviesAll = [];
+    if (localStorage.getItem("results")) {
         arrayMoviesAll = JSON.parse(localStorage.getItem("results"));
-        for(i = 0; i < arrayMoviesAll.length; i++){
-            if(arrayMoviesAll[i].title === moviesObjet.title){
+        for (i = 0; i < arrayMoviesAll.length; i++) {
+            if (arrayMoviesAll[i].title === moviesObjet.title) {
                 exist = true
             }
         }
-        if(exist == false){
+        if (exist == false) {
             arrayMoviesAll.push(moviesObjet)
             console.log(arrayMoviesAll)
 
             let stringiMovies = JSON.stringify(arrayMoviesAll)
             localStorage.setItem("results", stringiMovies)
+            alert('Pelicula seleccionado a Favoritos')
         }
-        else{
+        else {
             alert('Esta pelicula ya tienes seleccionado como favoritos')
-        }  
+        }
 
     }
-    else{
+    else {
         arrayMoviesAll.push(moviesObjet)
         console.log(arrayMoviesAll)
 
         let stringiMovies = JSON.stringify(arrayMoviesAll)
         localStorage.setItem("results", stringiMovies)
+        alert('Pelicula seleccionado a Favoritos')
     }
 }
 
